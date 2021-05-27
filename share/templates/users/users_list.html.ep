@@ -1,0 +1,56 @@
+% layout 'default';
+% title 'List users';
+
+
+% if (defined $users) {
+	<div class="container">
+	<br>
+	<br>
+	<button onclick="location.href='/app/menu/show/'" type="button" class="btn btn-primary" id="cancel">Tillbaka</button>
+		<p>
+		<br>
+			%= label_for number_of_hits => "Antal träffar"
+			%= label_for hits => $number_of_hits
+		</p>
+		<div class="table table-striped table-hover">
+			 <table class="table" >
+			<tr>
+				<th>Användar id</th>
+				<th>Namn</th>
+				<th>Skapad</th>
+				<th>Ändrad</th>
+		  </tr>
+		% $users->each( sub {
+		%   my $user = shift;
+		%=  tag tr => begin
+						%=    tag td => $user->{userid}
+						%=    tag td => $user->{username}
+				
+						%=    tag td => human_datetime $user->{insdatetime}
+						%=    tag td => human_datetime $user->{moddatetime}
+		%       end
+		% });
+		</table>
+	</div>
+%}
+
+%= javascript begin
+
+function closeRecord(sentinel_pkey, token) {
+  $.ajax({
+	type:'GET',
+	url:'/api/v1/sentinel/close/' + sentinel_pkey,
+	headers: {
+		"Authorization":token,
+	},
+	success:function(data) {
+		location.href='/app/sentinel/list/';
+	},
+	error:function(e){
+		alert(e);
+	  }
+  });
+};
+
+% end
+

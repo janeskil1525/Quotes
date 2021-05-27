@@ -1,0 +1,69 @@
+{
+  "languages": {
+    "title": "Språk",
+    "description": "De språk som stöds av LagaPro",
+    "x-id-field": "languages_pkey",
+    "x-list-columns": [
+      "lan",
+      "lan_name"
+    ],
+    "properties": {
+      "languages_pkey": {
+        "type": "integer",
+        "title": "Språk id",
+        "x-order": 1,
+        "readOnly":true
+      },
+      "lan": {
+        "type": "string",
+        "title": "Språk kort",
+        "x-order": 2
+      },
+      "lan_name": {
+        "type": "string",
+        "title": "Beskrivning",
+        "x-order": 1
+      }
+    }
+  },
+  "translations": {
+    "title": "Översättningar",
+    "description": "Texter på olika språk",
+    "x-id-field": "translations_pkey",
+    "x-list-columns": [
+      "module",
+      "tag"
+    ],
+    "properties": {
+      "translations_pkey": {
+        "type": "integer",
+        "title": "Text id",
+        "x-order": 1,
+        "readOnly":true
+      },
+      "languages_fkey": {
+        "type": "integer",
+        "title": "Språk",
+        "x-order": 2,
+        "readOnly":true,
+        "x-foreign-key": "languages"
+      },
+      "module": {
+        "type": "string",
+        "title": "Modul",
+        "x-order": 3
+      },
+      "tag": {
+        "type": "string",
+        "title": "Tag",
+        "x-order": 4
+      },
+      "translation": {
+        "type": "string",
+        "title": "Text",
+        "x-order": 5,
+        "format" : "textarea"
+      }
+    }
+  }
+}

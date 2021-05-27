@@ -1,0 +1,24 @@
+% layout 'default';
+% title 'Orion menu';
+
+% if (defined $menu) {
+<div class="container">
+  <div class="row">
+    <div class="col">
+	<h2>Meny</h2>
+	<div class="list-group">
+% $menu->each( sub {
+%   my $menu = shift;
+    <a href="<%= $menu->{menu_path} %>" class="list-group-item list-group-item-action"><%= $menu->{menu} %> </a>
+%});
+</div>
+</div>
+<div class="col-6">
+
+</div>
+<div class="col">
+
+</div>
+</div>
+
+%}
