@@ -1,4 +1,4 @@
-package Order::Model::Rfqs;
+package Quotes::Model::Rfqs;
 use Mojo::Base 'Daje::Utils::Sentinelsender';
 
 use Try::Tiny;

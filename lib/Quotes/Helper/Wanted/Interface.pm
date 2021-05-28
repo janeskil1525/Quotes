@@ -1,4 +1,4 @@
-package Order::Helper::Wanted::Interface;
+package Quotes::Helper::Wanted::Interface;
 use Mojo::Base 'Daje::Utils::Sentinelsender';
 
 use Order::Model::Wanted;

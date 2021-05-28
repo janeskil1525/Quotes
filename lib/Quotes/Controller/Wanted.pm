@@ -1,4 +1,4 @@
-package Order::Controller::Wanted;
+package Quotes::Controller::Wanted;
 use Mojo::Base 'Mojolicious::Controller';
 
 use Mojo::JSON qw{decode_json encode_json};

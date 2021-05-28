@@ -1,0 +1,64 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0",
+    "title": "Basket API"
+  },
+  "paths": {
+    "/v1/quotes/open": {
+      "post": {
+        "operationId": "openQuotes",
+        "x-mojo-name": "open_quotes",
+        "x-mojo-to": "quotes#open_quotes",
+        "summary": "get number of open quotes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userid",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Open quotes response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "openitems": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ]
+}

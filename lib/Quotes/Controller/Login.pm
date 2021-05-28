@@ -1,11 +1,20 @@
-package quotes::Controller::Example;
+package Quotes::Controller::Example;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 
-# This action will render a template
-sub welcome ($self) {
+sub showlogin ($self) {
 
-  # Render template "example/welcome.html.ep" with message
-  $self->render(msg => 'Welcome to the Mojolicious real-time web framework!');
+  $self->render(template => 'logon/logon');
 }
 
+sub login ($self) {
+
+  if($self->authenticate->login_check($self->param('email'), $self->param('pass'), 'Basket')) {
+
+    $self->session({ auth => 1 });
+    return $self->redirect_to('/app/menu/show');
+  }
+
+  $self->redirect_to($self->config->{webserver});
+  $self->flash('error' => 'Wrong login/password');
+}
 1;

@@ -1,4 +1,4 @@
-package Order::Helper::Rfqs;
+package Quotes::Helper::Rfqs;
 use Mojo::Base 'Daje::Utils::Sentinelsender';
 
 use Order::Model::Rfqs;

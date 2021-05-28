@@ -1,4 +1,4 @@
-package Order::Controller::Rfqs;
+package Quotes::Controller::Rfqs;
 use Mojo::Base 'Mojolicious::Controller';
 
 use Scalar::Util qw(looks_like_number);

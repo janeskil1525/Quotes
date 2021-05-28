@@ -1,4 +1,4 @@
-package Order::Helper::Selectnames;
+package Quotes::Helper::Selectnames;
 use Mojo::Base -base;
 
 use Mojo::JSON qw{from_json};

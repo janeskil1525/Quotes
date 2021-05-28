@@ -1,4 +1,4 @@
-package Order::Model::Quotes;
+package Quotes::Model::Quotes;
 use Mojo::Base 'Daje::Utils::Sentinelsender';
 
 use Mojo::JSON qw{to_json};
