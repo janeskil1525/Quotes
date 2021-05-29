@@ -1,9 +1,13 @@
-package quotes;
+package Quotes;
 use Mojo::Base 'Mojolicious', -signatures;
 
 use Authenticate::Helper::Client;
 use Translations::Helper::Client;
 use Parameters::Helper::Client;
+use Messenger::Helper::Client;
+
+use Quotes::Helper::Wanted::Interface;
+use Quotes::Helper::Rfqs;
 
 use Mojo::Pg;
 
@@ -11,27 +15,28 @@ use File::Share;
 use Mojo::File;
 use Mojo::JSON qw {from_json};
 
-$ENV{TRANSLATIONS_HOME} = '/home/jan/Project/Translations/'
-    unless $ENV{TRANSLATIONS_HOME};
+$ENV{QUOTES_HOME} = '/home/jan/Project/Quotes/'
+    unless $ENV{QUOTES_HOME};
 
 has dist_dir => sub {
   return Mojo::File->new(
-      File::Share::dist_dir('Translations')
+      File::Share::dist_dir('Quotes')
   );
 };
 
 has home => sub {
-  Mojo::Home->new($ENV{TRANSLATIONS_HOME});
+  Mojo::Home->new($ENV{QUOTES_HOME});
 };
 
 # This method will run once at server start
 sub startup ($self) {
 
   # Load configuration from config file
-  mmy $config = $self->plugin('Config');
+  my $config = $self->plugin('Config');
 
   $self->helper(pg => sub {state $pg = Mojo::Pg->new->dsn(shift->config('pg'))});
   $self->log->path($self->home() . $self->config('log'));
+    $self->plugin('Minion'  => { Pg => $self->pg });
 
   $self->renderer->paths([
       $self->dist_dir->child('templates'),
@@ -58,16 +63,24 @@ sub startup ($self) {
 
     $self->helper(
         rfqs => sub {
-            state $rfqs= Order::Helper::Rfqs->new(pg => shift->pg)
+            state $rfqs = Quotes::Helper::Rfqs->new(pg => shift->pg)
         }
     );
     $self->rfqs($self->minion);
 
     $self->helper(
         wanted => sub {
-            state $wanted = Order::Helper::Wanted::Interface->new(pg => shift->pg)
+            state $wanted = Quotes::Helper::Wanted::Interface->new(pg => shift->pg)
         }
     );
+
+    $self->helper(
+        messenger => sub {
+            state $messenger= Messenger::Helper::Client->new();
+        }
+    );
+    $self->messenger->endpoint_address($self->config->{messenger}->{endpoint_address});
+    $self->messenger->key($self->config->{messenger}->{key});
 
   $self->helper(
       translations => sub {

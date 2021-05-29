@@ -2,7 +2,7 @@ package Quotes::Model::Wanted;
 use Mojo::Base 'Daje::Utils::Sentinelsender';
 
 use Try::Tiny;
-use Order::Helper::Postgres::Columns;;
+use Quotes::Helper::Postgres::Columns;
 
 has 'pg';
 
@@ -97,7 +97,7 @@ sub set_setdefault_data{
     my ($self, $data) = @_;
 
     my $fields;
-    ($data, $fields) = Order::Helper::Postgres::Columns;->new(
+    ($data, $fields) = Quotes::Helper::Postgres::Columns->new(
         pg => $self->pg
     )->set_setdefault_data($data, 'wanted');
 
